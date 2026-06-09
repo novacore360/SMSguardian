@@ -12,21 +12,29 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.secureguardian.app"
-        minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+    applicationId = "com.secureguardian.app"
+    minSdk = 26
+    targetSdk = 34
+    versionCode = 1
+    versionName = "1.0.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-
-        // Supabase config from environment variables (set in Codemagic)
-        buildConfigField("String", "SUPABASE_URL", "\"${System.getenv("SUPABASE_URL") ?: "https://lrnvnbnnxuynaalggdtr.supabase.co"}\"")
-        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${System.getenv("SUPABASE_ANON_KEY") ?: ""}\"")
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    vectorDrawables {
+        useSupportLibrary = true
     }
+
+    // Supabase config - check both project properties AND environment variables
+    val supabaseUrl = project.findProperty("SUPABASE_URL") as? String 
+        ?: System.getenv("SUPABASE_URL")
+        ?: "https://lrnvnbnnxuynaalggdtr.supabase.co"
+    
+    val supabaseAnonKey = project.findProperty("SUPABASE_ANON_KEY") as? String
+        ?: System.getenv("SUPABASE_ANON_KEY")
+        ?: ""
+    
+    buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+    buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
+}
 
     signingConfigs {
         create("release") {
