@@ -17,15 +17,13 @@ workflows:
 
       - name: Set up Supabase environment
         script: |
-          # The SUPABASE_URL and SUPABASE_ANON_KEY vars come from the
-          # "supabase_credentials" group defined in Codemagic Environment Variables.
-          # They are injected into BuildConfig via app/build.gradle.kts automatically.
           echo "SUPABASE_URL: $SUPABASE_URL"
           echo "SUPABASE_ANON_KEY configured: $([ -n "$SUPABASE_ANON_KEY" ] && echo YES || echo NO)"
 
       - name: Build release APK & AAB
         script: |
           cd $CM_BUILD_DIR
+          # Pass variables as project properties using -P flag
           ./gradlew bundleRelease assembleRelease \
             -PSUPABASE_URL="$SUPABASE_URL" \
             -PSUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
@@ -35,11 +33,12 @@ workflows:
       - app/build/outputs/**/*.apk
       - app/build/outputs/**/mapping.txt
 
-    publishing:
-      google_play:
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: internal
-        submit_as_draft: true
+    # Temporarily disable publishing to fix build
+    # publishing:
+    #   google_play:
+    #     credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+    #     track: internal
+    #     submit_as_draft: true
 
   android-debug:
     name: SecureSMS Guardian - Android Debug
@@ -57,8 +56,8 @@ workflows:
         script: |
           cd $CM_BUILD_DIR
           ./gradlew assembleDebug \
-            -PSUPABASE_URL="${SUPABASE_URL:-https://lrnvnbnnxuynaalggdtr.supabase.co}" \
-            -PSUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
+            -PSUPABASE_URL="${SUPABASE_URL}" \
+            -PSUPABASE_ANON_KEY="${SUPABASE_ANON_KEY}"
 
     artifacts:
       - app/build/outputs/**/*.apk
