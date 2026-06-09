@@ -23,6 +23,7 @@ workflows:
       - name: Build release APK & AAB
         script: |
           cd $CM_BUILD_DIR
+          chmod +x ./gradlew
           # Pass variables as project properties using -P flag
           ./gradlew bundleRelease assembleRelease \
             -PSUPABASE_URL="$SUPABASE_URL" \
@@ -55,6 +56,7 @@ workflows:
       - name: Build debug APK
         script: |
           cd $CM_BUILD_DIR
+          chmod +x ./gradlew
           ./gradlew assembleDebug \
             -PSUPABASE_URL="${SUPABASE_URL}" \
             -PSUPABASE_ANON_KEY="${SUPABASE_ANON_KEY}"
