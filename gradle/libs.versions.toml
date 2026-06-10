@@ -12,19 +12,16 @@ navigation = "2.7.7"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 room = "2.6.1"
-supabase = "2.6.1"
+supabase = "2.5.1"
 ktor = "2.3.12"
 coroutines = "1.8.1"
 coil = "2.6.0"
 datastore = "1.1.1"
 workManager = "2.9.0"
 biometric = "1.1.0"
-accompanist = "0.34.0"
-material3 = "1.2.1"
 kotlinxSerialization = "1.6.3"
 timber = "5.0.1"
 securityCrypto = "1.1.0-alpha06"
-itext = "7.2.5"
 splashscreen = "1.0.1"
 
 [libraries]
@@ -40,7 +37,7 @@ androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 # Navigation
@@ -56,7 +53,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
-# Supabase
+# Supabase - FIXED artifact names
 supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt", version.ref = "supabase" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt", version.ref = "supabase" }
 supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime-kt", version.ref = "supabase" }
