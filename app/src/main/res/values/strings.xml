@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SecureSMS Guardian</string>
+    <string name="notification_channel_threat_name">Threat Alerts</string>
+    <string name="notification_channel_blocked_name">Blocked Messages</string>
+    <string name="notification_channel_service_name">SMS Monitoring</string>
+    <string name="permission_sms_rationale">SecureSMS Guardian needs SMS permission to analyze incoming messages for phishing and fraud attempts.</string>
+    <string name="permission_contacts_rationale">SecureSMS Guardian needs contacts permission to identify known senders and distinguish them from unknown numbers.</string>
+    <string name="permission_notification_rationale">SecureSMS Guardian needs notification permission to alert you about threats in real time.</string>
+</resources>
