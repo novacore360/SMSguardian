@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.2"
-kotlin = "1.9.23"
+kotlin = "2.1.21"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -12,7 +12,6 @@ navigation = "2.7.7"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 room = "2.6.1"
-# Updated Supabase to a stable version with proper artifacts
 supabase = "3.2.5"
 ktor = "3.1.3"
 coroutines = "1.8.1"
@@ -54,7 +53,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
-# Supabase - CORRECT artifact names for version 2.0.1
+# Supabase
 supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt", version.ref = "supabase" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt", version.ref = "supabase" }
 supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime-kt", version.ref = "supabase" }
@@ -107,3 +106,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
