@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -23,15 +24,6 @@ android {
             useSupportLibrary = true
         }
 
-        // ── Supabase credentials ───────────────────────────────────────────
-        // Key lookup order: Gradle project property (-P flag) → environment variable → empty string.
-        //
-        // "anon key" and "publishable key" are the SAME key — Supabase renamed it in their
-        // newer dashboard. Find it at: Supabase Dashboard → Settings → API → anon / public.
-        // NEVER use the service_role key here.
-        //
-        // For local builds: uncomment the matching lines in gradle.properties.
-        // For Codemagic: set SUPABASE_URL + SUPABASE_ANON_KEY in the supabase_credentials group.
         val supabaseUrl = (project.findProperty("SUPABASE_URL") as? String
             ?: System.getenv("SUPABASE_URL")
             ?: "https://lrnvnbnnxuynaalggdtr.supabase.co").trim()
@@ -46,7 +38,6 @@ android {
 
     signingConfigs {
         create("release") {
-            // Set via Codemagic environment variables; gracefully no-op for local debug builds.
             val keystorePath = System.getenv("CM_KEYSTORE_PATH")
             if (!keystorePath.isNullOrBlank()) {
                 storeFile = file(keystorePath)
@@ -67,7 +58,6 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
 
-            // Fail the RELEASE build if the anon key was not supplied.
             val anonKey = (project.findProperty("SUPABASE_ANON_KEY") as? String
                 ?: System.getenv("SUPABASE_ANON_KEY") ?: "").trim()
             require(anonKey.isNotBlank()) {
@@ -88,7 +78,6 @@ android {
         debug {
             isDebuggable = true
             applicationIdSuffix = ".debug"
-            // Debug builds allow a missing key so developers can build the UI without credentials.
         }
     }
 
@@ -110,9 +99,7 @@ android {
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.13"
-    }
+    // composeOptions block removed — no longer needed with Kotlin 2.x + compose-compiler plugin
 
     packaging {
         resources {
