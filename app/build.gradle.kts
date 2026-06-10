@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.secureguardian.app"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.secureguardian.app"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
 
@@ -98,8 +98,6 @@ android {
         compose = true
         buildConfig = true
     }
-
-    // composeOptions block removed — no longer needed with Kotlin 2.x + compose-compiler plugin
 
     packaging {
         resources {
