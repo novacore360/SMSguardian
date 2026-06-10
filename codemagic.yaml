@@ -1,0 +1,70 @@
+workflows:
+  android-release:
+    name: SecureSMS Guardian - Android Release
+    max_build_duration: 60
+    environment:
+      android_signing:
+        - secureguardian_keystore
+      groups:
+        - supabase_credentials   # Must contain: SUPABASE_URL, SUPABASE_ANON_KEY
+      vars:
+        PACKAGE_NAME: "com.secureguardian.app"
+      java: 21
+    scripts:
+      - name: Set up local.properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+
+      - name: Validate Supabase credentials
+        script: |
+          echo "SUPABASE_URL: $SUPABASE_URL"
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "ERROR: SUPABASE_ANON_KEY is not set in the 'supabase_credentials' group."
+            exit 1
+          fi
+          echo "SUPABASE_ANON_KEY: configured (${#SUPABASE_ANON_KEY} chars)"
+
+      - name: Build release APK & AAB
+        script: |
+          cd $CM_BUILD_DIR
+          chmod +x ./gradlew
+          ./gradlew bundleRelease assembleRelease \
+            -PSUPABASE_URL="$SUPABASE_URL" \
+            -PSUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
+
+    artifacts:
+      - app/build/outputs/**/*.aab
+      - app/build/outputs/**/*.apk
+      - app/build/outputs/**/mapping.txt
+
+    # Uncomment when Google Play service account is configured:
+    # publishing:
+    #   google_play:
+    #     credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+    #     track: internal
+    #     submit_as_draft: true
+
+  android-debug:
+    name: SecureSMS Guardian - Android Debug
+    max_build_duration: 30
+    environment:
+      groups:
+        - supabase_credentials   # Optional for debug; UI-only builds work without it
+      java: 21
+    scripts:
+      - name: Set up local.properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+
+      - name: Build debug APK
+        script: |
+          cd $CM_BUILD_DIR
+          chmod +x ./gradlew
+          # Debug builds tolerate a missing key (the build.gradle require() only runs for release).
+          # Pass whatever is available; empty string is fine for UI testing.
+          ./gradlew assembleDebug \
+            -PSUPABASE_URL="${SUPABASE_URL:-https://lrnvnbnnxuynaalggdtr.supabase.co}" \
+            -PSUPABASE_ANON_KEY="${SUPABASE_ANON_KEY:-}"
+
+    artifacts:
+      - app/build/outputs/**/*.apk
