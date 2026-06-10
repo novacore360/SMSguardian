@@ -111,7 +111,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.compose)
+    implementation(libs.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
 
     // Compose
